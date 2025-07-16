@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -10,14 +9,26 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/login', {
-        email,
-        password,
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
       });
-      alert(res.data.msg);
-      navigate('/dashboard'); // or replace with your actual dashboard route
+
+      const data = await response.json();
+
+      if (data.success) {
+        localStorage.setItem("user", JSON.stringify(data.user));
+        alert(data.msg || "Login successful");
+        navigate("/dashboard");
+      } else {
+        alert(data.msg || "Login failed");
+      }
     } catch (err) {
-      alert(err.response?.data?.msg || 'Login failed');
+      alert("Something went wrong. Please try again.");
+      console.error(err);
     }
   };
 
@@ -68,5 +79,4 @@ function Login() {
     </div>
   );
 }
-
 export default Login;
