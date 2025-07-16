@@ -63,7 +63,7 @@ function Signup() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
+            <label className="block text-sm font-medium text-gray-700">Confirmed</label>
             <input
               type="password"
               placeholder="Confirm Password"
@@ -83,7 +83,7 @@ function Signup() {
         </form>
 
         <p className="text-sm text-gray-600 mt-4 text-center">
-          Already have an account?{' '}
+          Already have an Account?{' '}
           <Link to="/login" className="text-emerald-600 font-medium hover:underline">
             Log in
           </Link>
