@@ -85,7 +85,7 @@ function Signup() {
               required
             />
           </div>
-
+          
           <button
             type="submit"
             className="w-full bg-emerald-600 text-white py-2 rounded-md hover:bg-emerald-700 transition duration-300"

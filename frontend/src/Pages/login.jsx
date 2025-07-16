@@ -8,18 +8,27 @@ function Login() {
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post('http://localhost:5000/login', {
-        email,
-        password,
-      });
-      alert(res.data.msg);
-      navigate('/dashboard'); // or replace with your actual dashboard route
-    } catch (err) {
-      alert(err.response?.data?.msg || 'Login failed');
+  e.preventDefault();
+  try {
+    const res = await axios.post('http://localhost:5000/login', {
+      email,
+      password,
+    });
+
+    console.log("✅ Login response:", res.data); // Debug print
+
+    if (res.data.msg === 'Login successful') {
+      localStorage.setItem('user', JSON.stringify(res.data.user));
+      navigate('/dashboard');
+    } else {
+      alert('Login failed: ' + res.data.msg);
     }
-  };
+  } catch (err) {
+    console.error("❌ Error logging in:", err);
+    alert(err.response?.data?.msg || 'Login failed');
+  }
+};
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-indigo-200">
