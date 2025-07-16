@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log('Login with:', email, password);
-    // Add login logic (API call, validation, etc.) here
+    try {
+      const res = await axios.post('http://localhost:5000/login', {
+        email,
+        password,
+      });
+      alert(res.data.msg);
+      navigate('/dashboard'); // or replace with your actual dashboard route
+    } catch (err) {
+      alert(err.response?.data?.msg || 'Login failed');
+    }
   };
 
   return (

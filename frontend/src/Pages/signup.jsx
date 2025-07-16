@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -9,7 +10,9 @@ function Signup() {
     confirmPassword: ''
   });
 
-  const handleSignup = (e) => {
+  const navigate = useNavigate();
+
+  const handleSignup = async (e) => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
@@ -17,8 +20,17 @@ function Signup() {
       return;
     }
 
-    console.log('Signup data:', formData);
-    // Add signup API call or logic here
+    try {
+      const res = await axios.post('http://localhost:5000/signup', {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      });
+      alert(res.data.msg);
+      navigate('/login');
+    } catch (err) {
+      alert(err.response?.data?.msg || 'Signup failed');
+    }
   };
 
   return (
@@ -63,10 +75,10 @@ function Signup() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Confirmed</label>
+            <label className="block text-sm font-medium text-gray-700">Confirmed login</label>
             <input
               type="password"
-              placeholder="Confirm Password"
+              placeholder="Confirmed login"
               value={formData.confirmPassword}
               onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
