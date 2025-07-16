@@ -75,10 +75,10 @@ function Signup() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Confirmed login</label>
+            <label className="block text-sm font-medium text-gray-700">Confirm Password</label>
             <input
               type="password"
-              placeholder="Confirmed login"
+              placeholder="Confirm Password"
               value={formData.confirmPassword}
               onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
